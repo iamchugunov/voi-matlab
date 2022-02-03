@@ -32,7 +32,7 @@ function [flag, zav] = process_zav(zav, config)
         end
         t_cur = t(nums);
         
-        [RD, koef, order] = approx_rd(t_cur - t(1),rd_cur, 4);
+        [RD, koef, order] = approx_rd(t_cur - t(1),rd_cur, 1);
         sko = std(RD - rd_cur');
         
         if sko > 20
