@@ -30,7 +30,7 @@ function [ config ] = Config( )
     BLHref = PostsBLH(:,4);
     BLHref(3) = 0;
     for i = 1:size(PostsBLH,2)
-        PostsENU(:,i) = BLH2ENU(PostsBLH(:,i),BLHref);
+        PostsENU(:,i) = BLH2ENU1(PostsBLH(:,i),BLHref);
     end
     config.BLHref = BLHref;
     config.PostsBLH = PostsBLH;

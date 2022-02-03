@@ -1,4 +1,4 @@
-function [ c ] = BLH2ENU( a, b )
+function [ c ] = BLH2ENU1( a, b )
     x_op = lla2ecef1(b);
     x = lla2ecef1(a);
     B = b(1)*pi/180;
