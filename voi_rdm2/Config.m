@@ -30,7 +30,7 @@ function [ config ] = Config( )
     BLHref = PostsBLH(:,4);
     BLHref(3) = 0;
     for i = 1:size(PostsBLH,2)
-        [PostsENU(1,i), PostsENU(2,i), PostsENU(3,i)] = geodetic2enu(PostsBLH(1,i),PostsBLH(2,i),PostsBLH(3,i),BLHref(1,1),BLHref(2,1),BLHref(3,1),wgs84Ellipsoid);
+        PostsENU(:,i) = BLH2ENU(PostsBLH(:,i),BLHref);
     end
     config.BLHref = BLHref;
     config.PostsBLH = PostsBLH;
