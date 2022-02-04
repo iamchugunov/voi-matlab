@@ -15,7 +15,7 @@ function [x4] = process_traj(traj, config)
     plot(config.posts(1,:),config.posts(2,:),'v')
     hold on
     grid on
-    plot(x4(1,:),x4(2,:),'o')
+    plot(x4(1,:),x4(2,:),'-')
     
 end
 
