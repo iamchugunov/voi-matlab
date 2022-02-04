@@ -15,7 +15,11 @@ function [x4] = process_traj(traj, config)
     plot(config.posts(1,:),config.posts(2,:),'v')
     hold on
     grid on
+<<<<<<< Updated upstream
     plot(x4(1,:),x4(2,:),'-')
+=======
+    plot(x4(1,:),x4(2,:),'x')
+>>>>>>> Stashed changes
     
 end
 

@@ -9,9 +9,9 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
     for i = 1:length(poits)
         i
         
-        if filter_poit(poits(i))
-             continue
-        end
+%         if filter_poit(poits(i))
+%              continue
+%         end
         
         
 %         if poits(i).freq > 1000
@@ -47,7 +47,7 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
     end
 
     if match_flag_zav == 0
-        if poits(i).count > 1
+        if poits(i).count > 2
             j = length(zav) + 1;
             if j == 1
                 zav = zav_new(poits(i), config);

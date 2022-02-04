@@ -25,9 +25,10 @@ function [rd_, t_rd] = process_rd_poits(poits)
         rd_(i,:) = RD_';
         t_rd = t1 + t(1);
     end
-    plot(t,rd','x')
-    hold on
-    plot(t_rd,rd_','.-')
+%     figure(10)
+%     plot(t,rd','x')
+%     hold on
+%     plot(t_rd,rd_','.-')
     
 end
 

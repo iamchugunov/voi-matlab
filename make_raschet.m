@@ -1,6 +1,6 @@
 function [X, t] = make_raschet(poits, config)
-    Tnak = 45;
-    T = 1;
+    Tnak = 10;
+    T = 10;
     k = 0;
     n1 = 1;
     n2 = 2;
@@ -35,5 +35,18 @@ function [X, t] = make_raschet(poits, config)
             n2 = n2+1;
         end
     end
+    
+    a = 0.9;
+    Xf(:,1) = X(:,1);
+    
+    for i = 2:size(X,2)
+        Xf(:,i) = a * Xf(:,i-1) + (1 - a) * X(:,i);
+    end
+    
+    plot(config.posts(1,:),config.posts(2,:),'v')
+    hold on
+    grid on
+    plot(X(1,:),X(2,:),'-')
+    plot(Xf(1,:),Xf(2,:),'-','linewidth',2)
 end
 
