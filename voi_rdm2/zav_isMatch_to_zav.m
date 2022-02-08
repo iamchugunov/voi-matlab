@@ -34,8 +34,8 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
         end
     end
 
-    thres1 = 60;
-    thres2 = (300 - thres1)/10;
+    thres1 = config.default_thres1;
+    thres2 = config.default_thres2;
         
     k = 0;
     for i = 1:6

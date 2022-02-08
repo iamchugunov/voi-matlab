@@ -66,8 +66,11 @@ function [ config ] = Config( )
     config.T_nak = 10;
     config.T_est = 5;
     
-    config.sigma_n = 50;
-    config.sigma_ksi = 1;
+    config.default_thres1 = 60;
+    config.default_thres2 = (300 - config.default_thres1)/10;
+    
+    config.sigma_n = 10;
+    config.sigma_ksi = 0.1;
 
 
 end

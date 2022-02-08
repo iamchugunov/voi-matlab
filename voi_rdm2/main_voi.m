@@ -47,7 +47,7 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
         for j = 1:length(traj)
             match_flag_traj = traj_isMatch(traj(j),poit, config);
             if match_flag_traj == 1
-                [traj(j), config] = zav_add_poit(traj(j), poit, config);
+                [traj(j), config] = traj_add_poit(traj(j), poit, config);
                 break;
             end
         end
