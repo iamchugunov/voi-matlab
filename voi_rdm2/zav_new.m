@@ -1,4 +1,4 @@
-function [zav] = zav_new(poit, config)
+function [zav, config] = zav_new(poit, config)
         
     zav.p_count = 0; % число отметок траектории
     zav.lifetime = 0; % время жизни траектории
@@ -6,10 +6,15 @@ function [zav] = zav_new(poit, config)
 %     zav.Smode = poit.Smode; % ID траектории
     zav.Smode = -1; % ID траектории
     zav.poits = poit; % список отметок
+    zav.modes_count = 0; % число modes отметок траектории
+    zav.modes_poits = poit;
     zav.t_current = poit.Frame; % время кадра последней метки
+    
     zav.T_nak_default = config.T_nak; % время накопления по умолчанию
     zav.T_nak = config.T_nak; % время накопления конкретной траектории
-    zav.T_kill = config.zav_T_kill;
+    zav.zav_T_kill = config.zav_T_kill;
+    zav.traj_T_kill = config.traj_T_kill;
+    zav.strob_timeout = config.strob_timeout;
     zav.freqs = 0; % массив частот
     zav.freq = 0;
     zav.last_4 = [];
@@ -27,7 +32,7 @@ function [zav] = zav_new(poit, config)
     last_rd.koef_f = [0;0];
     zav.last_rd(1:6) = last_rd;
     
-    [ready_flag, zav] = zav_add_poit(zav, poit, config);
+    [zav, config] = zav_add_poit(zav, poit, config);
     
     
     

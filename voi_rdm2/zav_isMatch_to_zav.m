@@ -11,7 +11,12 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
         end
     end
     
-    if poit.Frame - zav.t_current > config.T_kill
+    if poit.id_only
+        flag = 0;
+        return
+    end
+    
+    if poit.Frame - zav.t_current > zav.strob_timeout
         flag = 0;
         return;
     end
@@ -20,18 +25,18 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
         flag = 0;
         return;
     end
-
-    thres1 = 60;
-    thres2 = (300 - thres1)/10;
     
     for i = 1:6
         if zav.last_rd(i).rd_flag ~= 0
-            if poit.Frame - zav.last_rd(i).t > config.T_nak
+            if poit.Frame - zav.last_rd(i).t > zav.strob_timeout
                 zav.last_rd(i).rd_flag = 0;
             end
         end
     end
-    
+
+    thres1 = 60;
+    thres2 = (300 - thres1)/10;
+        
     k = 0;
     for i = 1:6
         if zav.last_rd(i).rd_flag ~= 0 && poit.rd_flag(i)

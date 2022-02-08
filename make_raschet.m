@@ -1,5 +1,6 @@
-function [X, t] = make_raschet(poits, config)
-    Tnak = 10;
+function [X, t] = make_raschet(traj, config)
+    poits = traj.poits;
+    Tnak = 30;
     T = 10;
     k = 0;
     n1 = 1;
@@ -36,7 +37,7 @@ function [X, t] = make_raschet(poits, config)
         end
     end
     
-    a = 0.9;
+    a = 0.5;
     Xf(:,1) = X(:,1);
     
     for i = 2:size(X,2)
@@ -46,7 +47,7 @@ function [X, t] = make_raschet(poits, config)
     plot(config.posts(1,:),config.posts(2,:),'v')
     hold on
     grid on
-    plot(X(1,:),X(2,:),'-')
+    plot(X(1,:),X(2,:),'-','linewidth',2)
     plot(Xf(1,:),Xf(2,:),'-','linewidth',2)
 end
 

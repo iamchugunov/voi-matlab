@@ -5,11 +5,11 @@ function [flag] = filter_poit(poit)
 %         flag = 1;
 %     end
     
-%     if poit.count < 3 && poit.Smode < 0
-%         flag = 1;
-%         return;
-%     end
-%     
+    if poit.count < 3 && poit.Smode < 0
+        flag = 1;
+        return;
+    end
+    
 %     if poit.type == 1
 %         flag = 1;
 %         return;

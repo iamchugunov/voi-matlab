@@ -60,8 +60,9 @@ function [ config ] = Config( )
     config.ranges.r42 = norm(PostsENU(:,4) - PostsENU(:,2));
     config.ranges.r43 = norm(PostsENU(:,4) - PostsENU(:,3));
     
-    config.zav_T_kill = 1;
-    config.T_kill = 30;
+    config.zav_T_kill = 1; 
+    config.traj_T_kill = 30; 
+    config.strob_timeout = 30; 
     config.T_nak = 10;
     config.T_est = 5;
     
