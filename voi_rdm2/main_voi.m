@@ -13,6 +13,7 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
         
         poit = poits(i);
         poit.id_only = 0;
+        poit.rd_f = zeros(6,3);
         
         
         % deleting old zavs

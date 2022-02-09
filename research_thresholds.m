@@ -47,7 +47,7 @@ function [out] = research_thresholds(poits)
 %     subplot(224)
 %     plot(out(1,:),out(2:7,:),'.')
 %     xlim([0 10])
-    figure(1)
+    figure()
     plot(out(1,:),out(2:7,:),'.')
 end
 

@@ -52,6 +52,15 @@ function [traj, config] = traj_add_poit(traj, poit, config)
                 [traj.filters(i).X, traj.filters(i).D_x] = Kalman_step_1D(poit.rd(i), traj.filters(i).X, traj.filters(i).D_x, dt, traj.filters(i).D_n, traj.filters(i).D_ksi);
                 traj.filters(i).t_last = poit.Frame;
                 traj.filters(i).history(:,size(traj.filters(i).history, 2) + 1) = [traj.filters(i).t_last; traj.filters(i).X];
+                traj.poits(traj.p_count).rd_f(i,:) = [traj.filters(i).X(1) traj.filters(i).X(2) traj.filters(i).X(3)];
+            else
+                if poit.rd_flag(i)
+                    [poits] = traj_get_poits(traj, traj.T_nak);
+                    [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i);
+                    if flag
+                        [traj.filters(i)] = new_rd_kalman_filter_start(poits, i, rd(1), koef(2), config);
+                    end
+                end
             end
         end
     end

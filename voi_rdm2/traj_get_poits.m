@@ -1,23 +1,11 @@
-function [poits] = traj_get_poits(traj)
+function [poits] = traj_get_poits(traj, T)
     
-    if traj.mode == 0
-        poits = traj.poits;
-        return
-    end
+       
+    t0 = traj.t_current - T;
     
-    T_nak = traj.T_nak;
+    nums = find([traj.poits.Frame] > t0);
     
-    t_1 = traj.t_current - T_nak;
-    
-    k = traj.p_count;
-    while k > 1
-        if traj.poits(k).Frame < t_1
-            break
-        end
-        k = k - 1;
-    end
-    
-    poits = traj.poits(k:end);
+    poits = traj.poits(nums);
     
 %     while length(poits) < 30
 %         T_nak = T_nak + 10;

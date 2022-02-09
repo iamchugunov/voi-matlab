@@ -21,15 +21,21 @@ function [flag] = traj_isMatch(traj, poit, config)
         return;
     end
     
-    if abs(poit.freq - traj.freq) > 10.
-        flag = 0;
-        return;
-    end
+%     if abs(poit.freq - traj.freq) > 10.
+%         flag = 0;
+%         return;
+%     end
 
     for i = 1:6
         if traj.last_rd(i).rd_flag ~= 0
             if poit.Frame - traj.last_rd(i).t > traj.strob_timeout
                 traj.last_rd(i).rd_flag = 0;
+            end
+        end
+        
+        if traj.filters(i).flag
+            if poit.Frame - traj.filters(i).t_last > traj.strob_timeout
+                traj.filters(i).flag = 0;
             end
         end
     end
@@ -39,7 +45,18 @@ function [flag] = traj_isMatch(traj, poit, config)
     
     k = 0;
     for i = 1:6
-        if traj.last_rd(i).rd_flag ~= 0 && poit.rd_flag(i)
+        
+        if traj.filters(i).flag && poit.rd_flag(i)
+            dt = poit.Frame - traj.filters(i).t_last;
+            k = k + 1;
+            if abs(traj.filters(i).X(1) + traj.filters(i).X(2) * dt - poit.rd(i)) > thres1 + thres2 * dt
+                flag = 0;
+                return;
+            end
+            continue;
+        end
+        
+        if traj.last_rd(i).rd_flag && poit.rd_flag(i)
             dt = poit.Frame - traj.last_rd(i).t;
             k = k + 1;
             if abs(traj.last_rd(i).rd - poit.rd(i)) > thres1 + thres2 * dt
