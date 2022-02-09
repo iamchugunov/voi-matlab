@@ -12,7 +12,8 @@ function [x4] = process_traj(traj, config)
         end
     end
     
-    plot(config.posts(1,:),config.posts(2,:),'v')
+    plot(config.posts(1,:),config.posts(2,:),'v');
+    axis ([-400000 400000 -400000 400000]);
     hold on
     grid on
     plot(x4(1,:),x4(2,:),'x')
