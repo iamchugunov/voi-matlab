@@ -36,6 +36,11 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
 
     thres1 = config.default_thres1;
     thres2 = config.default_thres2;
+    
+    if zav.freq < 1090
+        thres1 = thres1 * 3;
+        thres2 = thres2 * 3;
+    end
         
     k = 0;
     for i = 1:6

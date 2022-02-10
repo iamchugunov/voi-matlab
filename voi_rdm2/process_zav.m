@@ -12,10 +12,10 @@ function [flag, zav] = process_zav(zav, config)
     for i = 1:6
         [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i);
         
-        if sko > 20
-            flag = 0;
-            return
-        end
+%         if sko > 20
+%             flag = 0;
+%             return
+%         end
         
         if flag
             approx.rd(i,:) = rd;

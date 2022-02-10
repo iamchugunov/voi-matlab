@@ -1,5 +1,7 @@
-function [flag] = traj_isMatch(traj, poit, config)
+function [flag, d] = traj_isMatch(traj, poit, config)
 
+    d = 0;
+    
     if traj.Smode ~= -1 && poit.Smode ~=-1
         if traj.Smode == poit.Smode
             flag = 1;
@@ -43,29 +45,38 @@ function [flag] = traj_isMatch(traj, poit, config)
     thres1 = config.default_thres1;
     thres2 = config.default_thres2;
     
+    if traj.freq < 1090
+        thres1 = thres1 * 3;
+        thres2 = thres2 * 3;
+    end
+    
     k = 0;
     for i = 1:6
         
         if traj.filters(i).flag && poit.rd_flag(i)
             dt = poit.Frame - traj.filters(i).t_last;
             k = k + 1;
-            if abs(traj.filters(i).X(1) + traj.filters(i).X(2) * dt - poit.rd(i)) > thres1 + thres2 * dt
+            d(k) = abs(traj.filters(i).X(1) + traj.filters(i).X(2) * dt - poit.rd(i));
+            if d(k) > thres1 + thres2 * dt
                 flag = 0;
                 return;
             end
             continue;
         end
         
+        
         if traj.last_rd(i).rd_flag && poit.rd_flag(i)
             dt = poit.Frame - traj.last_rd(i).t;
             k = k + 1;
-            if abs(traj.last_rd(i).rd - poit.rd(i)) > thres1 + thres2 * dt
+            d(k) = abs(traj.last_rd(i).rd - poit.rd(i));
+            if d(k) > thres1 + thres2 * dt
                 flag = 0;
                 return;
             end
         end
     end
     
+    d = norm(d);
     
     if k > 1
         flag = 1;

@@ -10,11 +10,10 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
     
     for i = 1:length(poits)
         i
-        
+             
         poit = poits(i);
         poit.id_only = 0;
-        poit.rd_f = zeros(6,3);
-        
+        poit.rd_f = zeros(6,3);        
         
         % deleting old zavs
         nums = [];
@@ -44,14 +43,7 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
         end
 
 
-        match_flag_traj = 0;
-        for j = 1:length(traj)
-            match_flag_traj = traj_isMatch(traj(j),poit, config);
-            if match_flag_traj == 1
-                [traj(j), config] = traj_add_poit(traj(j), poit, config);
-                break;
-            end
-        end
+        [match_flag_traj, traj, config] = voi_is_match_to_traj(poit, traj, config);
         
         if match_flag_traj
             continue;

@@ -24,7 +24,7 @@ function [out] = research_thresholds(poits)
         while j < i
            rd = [0;0;0;0;0;0];
            dt = poits(i).Frame - poits(j).Frame;
-           if dt < 30
+           if dt < 10
                for n = 1:6
                    if poits(j).rd_flag(n) && poits(i).rd_flag(n)
                        rd(n) = poits(i).rd(n) - poits(j).rd(n);

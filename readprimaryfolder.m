@@ -84,7 +84,7 @@ function [poits] = readprimaryfolder()
 %             poit.kursk = str2num(S{19,1});
 %             poits(k) = poit;
 
-%             if str2num(S{8,1}) >= 1090
+%             if str2num(S{8,1}) <= 1090
 %                 k = k - 1;
 %                 continue;
 %             end
