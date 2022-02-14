@@ -7,7 +7,7 @@ function [] = get_rd_from_poits(poits)
     k6 = 0;
     
     t0 = poits(1).Frame;
-%     t0 = 0;
+    t0 = 0;
     for i = 1:length(poits)
         if poits(i).ToA(4) > 0 && poits(i).ToA(1) > 0
             k1 = k1 + 1;

@@ -60,17 +60,31 @@ function [ config ] = Config( )
     config.ranges.r42 = norm(PostsENU(:,4) - PostsENU(:,2));
     config.ranges.r43 = norm(PostsENU(:,4) - PostsENU(:,3));
     
-    config.zav_T_kill = 1; 
+    config.zav_T_kill = 1;
+    config.zav_T_kill_e2c = 25;
     config.traj_T_kill = 30; 
-    config.strob_timeout = 30; 
+    config.strob_timeout_1090 = 30; 
+    config.strob_timeout_e2c = 60; 
+    
     config.T_nak = 10;
+    config.T_nak_e2c = 15;
     config.T_est = 5;
     
-    config.default_thres1 = 60;
-    config.default_thres2 = (300 - config.default_thres1)/10;
+    config.sko_thres_1090 = 20;
+    config.sko_thres_e2c = 500;
+        
+    config.thres1090.h1 = 60;
+    config.thres1090.h2 = (300 - config.thres1090.h1)/10;
     
-    config.sigma_n = 10;
-    config.sigma_ksi = 0.1;
+    config.thres1090.h1f = 60;
+    config.thres1090.h2f = (100 - config.thres1090.h1f)/10;
+    
+    config.thres_e2c.h1 = 2500;
+    config.thres_e2c.h2 = 30;
+    
+    config.sigma_n_1090 = 10;
+    config.sigma_n_e2c = 300;
+    config.sigma_ksi = 0.1; % для 1090 можно 0.01
 
 
 end

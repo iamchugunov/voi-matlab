@@ -14,7 +14,7 @@ function [zav, config] = zav_new(poit, config)
     zav.T_nak = config.T_nak; % время накопления конкретной траектории
     zav.zav_T_kill = config.zav_T_kill;
     zav.traj_T_kill = config.traj_T_kill;
-    zav.strob_timeout = config.strob_timeout;
+    zav.strob_timeout = config.strob_timeout_1090;
     zav.freqs = 0; % массив частот
     zav.freq = 0;
     zav.last_4 = [];
@@ -33,6 +33,12 @@ function [zav, config] = zav_new(poit, config)
     zav.last_rd(1:6) = last_rd;
     
     [zav, config] = zav_add_poit(zav, poit, config);
+    
+    if zav.freq < 1090
+        zav.zav_T_kill = config.zav_T_kill_e2c;
+        zav.T_nak = config.T_nak_e2c;
+        zav.strob_timeout = config.strob_timeout_e2c;
+    end
     
     
     

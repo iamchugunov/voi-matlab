@@ -8,15 +8,19 @@ function [flag, zav] = process_zav(zav, config)
     approx.flags = [];
     approx.koef = [];
     
-    
+    if zav.freq == 1090
+        sko_thres = config.sko_thres_1090;
+    elseif zav.freq < 1090
+        sko_thres = config.sko_thres_e2c;
+    end
+        
     for i = 1:6
-        [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i);
+        [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i, sko_thres);
         
 %         if sko > 20
 %             flag = 0;
 %             return
 %         end
-        
         if flag
             approx.rd(i,:) = rd;
             approx.t_rd = t_rd;
@@ -24,6 +28,7 @@ function [flag, zav] = process_zav(zav, config)
             approx.koef(:,i) = koef;
         end
         approx.flags(i) = flag;
+        
         
     end
     

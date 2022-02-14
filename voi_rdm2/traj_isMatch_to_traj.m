@@ -1,5 +1,6 @@
 function [flag] = traj_isMatch_to_traj(traj, zav, config)
     
+    
     if traj.Smode ~= -1 && zav.Smode ~=-1
         if traj.Smode == zav.Smode
             flag = 1;

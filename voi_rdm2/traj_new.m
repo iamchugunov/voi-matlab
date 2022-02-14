@@ -20,7 +20,7 @@ function [traj] = traj_new(zav, config)
     
     for i = 1:6
         if zav.approx.flags(i)
-            filters(i) = new_rd_kalman_filter_start(traj.poits, i, zav.approx.rd(i,1), zav.approx.koef(2,i), config);
+            filters(i) = new_rd_kalman_filter_start(traj.poits, i, zav.approx.rd(i,1), zav.approx.koef(2,i), config, traj);
         else
             filters(i).flag = 0;
         end

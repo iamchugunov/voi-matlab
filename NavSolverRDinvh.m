@@ -73,6 +73,9 @@ while 1
             DOPy = sqrt(abs(invHH(2,2)));
             dop = norm([DOPx DOPy]);
             nev = norm(y(nums) - Y);
+            if nev > 200 
+                flag = 0;
+            end
         end
         break
     end

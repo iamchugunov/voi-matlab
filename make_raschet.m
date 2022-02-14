@@ -1,4 +1,4 @@
-function [X, t] = make_raschet(traj, config)
+function [Xf, t] = make_raschet(traj, config)
     poits = traj.poits;
     Tnak = 30;
     T = 10;
@@ -44,10 +44,19 @@ function [X, t] = make_raschet(traj, config)
         Xf(:,i) = a * Xf(:,i-1) + (1 - a) * X(:,i);
     end
     
-    plot(config.posts(1,:),config.posts(2,:),'v')
+%     plot(config.posts(1,:),config.posts(2,:),'v')
+%     hold on
+%     grid on
+%     plot(X(1,:),X(2,:),'-','linewidth',2)
+%     plot(Xf(1,:),Xf(2,:),'-','linewidth',2)
+    
+    for i = 1:length(Xf)
+        [x(1,i), x(2,i), x(3,i)] = enu2geodetic(Xf(1,i),Xf(2,i),Xf(3,i),config.BLHref(1),config.BLHref(2),config.BLHref(3),wgs84Ellipsoid);
+    end
+    
+    geoplot(config.PostsBLH(1,:),config.PostsBLH(2,:),'vk','linewidth',2)
     hold on
-    grid on
-    plot(X(1,:),X(2,:),'-','linewidth',2)
-    plot(Xf(1,:),Xf(2,:),'-','linewidth',2)
+    geoplot(x(1,:),x(2,:),'-','linewidth',2)
+    geobasemap streets
 end
 

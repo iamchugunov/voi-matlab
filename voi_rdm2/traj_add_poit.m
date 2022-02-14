@@ -56,9 +56,15 @@ function [traj, config] = traj_add_poit(traj, poit, config)
             else
                 if poit.rd_flag(i)
                     [poits] = traj_get_poits(traj, traj.T_nak);
-                    [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i);
+
+                    if traj.freq == 1090
+                        sko_thres = config.sko_thres_1090;
+                    elseif traj.freq < 1090
+                        sko_thres = config.sko_thres_e2c;
+                    end
+                    [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i, sko_thres);
                     if flag
-                        [traj.filters(i)] = new_rd_kalman_filter_start(poits, i, rd(1), koef(2), config);
+                        [traj.filters(i)] = new_rd_kalman_filter_start(poits, i, rd(1), koef(2), config, traj);
                     end
                 end
             end

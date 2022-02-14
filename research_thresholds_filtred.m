@@ -10,7 +10,7 @@ function [out] = research_thresholds_filtred(poits)
            dt = poits(i).Frame - poits(j).Frame;
            if dt < 10
                for n = 1:6
-                   if poits(j).rd_flag(n) && poits(i).rd_flag(n)
+                   if poits(j).rd_flag(n) && poits(i).rd_flag(n) && poits(j).rd_f(n) ~= 0
                        rd(n) = poits(i).rd(n) - (poits(j).rd_f(n,1) + poits(j).rd_f(n,2) * dt);
 %                        rd(n) = poits(i).rd(n) - (poits(j).rd_f(n,1));
                    end

@@ -1,6 +1,8 @@
 function [flag, d] = traj_isMatch(traj, poit, config)
 
     d = 0;
+%     flag = 1;
+%     return;
     
     if traj.Smode ~= -1 && poit.Smode ~=-1
         if traj.Smode == poit.Smode
@@ -18,38 +20,43 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         return
     end
     
-    if poit.Frame - traj.t_current > traj.strob_timeout
+    if traj.freq == 1090
+        thres1 = config.thres1090.h1;
+        thres2 = config.thres1090.h2;
+        
+        thres1f = config.thres1090.h1f;
+        thres2f = config.thres1090.h2f;
+        
+        strob_timeout = config.strob_timeout_1090;
+    elseif traj.freq < 1090
+        thres1 = config.thres_e2c.h1;
+        thres2 = config.thres_e2c.h2;
+        
+        thres1f = config.thres_e2c.h1;
+        thres2f = config.thres_e2c.h2;
+        
+        strob_timeout = config.strob_timeout_e2c;
+    end
+    
+    if poit.Frame - traj.t_current > strob_timeout
         flag = 0;
         return;
     end
-    
-%     if abs(poit.freq - traj.freq) > 10.
-%         flag = 0;
-%         return;
-%     end
 
     for i = 1:6
         if traj.last_rd(i).rd_flag ~= 0
-            if poit.Frame - traj.last_rd(i).t > traj.strob_timeout
+            if poit.Frame - traj.last_rd(i).t > strob_timeout
                 traj.last_rd(i).rd_flag = 0;
             end
         end
         
         if traj.filters(i).flag
-            if poit.Frame - traj.filters(i).t_last > traj.strob_timeout
+            if poit.Frame - traj.filters(i).t_last > strob_timeout
                 traj.filters(i).flag = 0;
             end
         end
-    end
-
-    thres1 = config.default_thres1;
-    thres2 = config.default_thres2;
-    
-    if traj.freq < 1090
-        thres1 = thres1 * 3;
-        thres2 = thres2 * 3;
-    end
-    
+    end  
+        
     k = 0;
     for i = 1:6
         
@@ -57,7 +64,7 @@ function [flag, d] = traj_isMatch(traj, poit, config)
             dt = poit.Frame - traj.filters(i).t_last;
             k = k + 1;
             d(k) = abs(traj.filters(i).X(1) + traj.filters(i).X(2) * dt - poit.rd(i));
-            if d(k) > thres1 + thres2 * dt
+            if d(k) > thres1f + thres2f * dt
                 flag = 0;
                 return;
             end
