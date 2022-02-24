@@ -32,10 +32,26 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         thres1 = config.thres_e2c.h1;
         thres2 = config.thres_e2c.h2;
         
-        thres1f = config.thres_e2c.h1;
-        thres2f = config.thres_e2c.h2;
+        thres1f = config.thres_e2c.h1f;
+        thres2f = config.thres_e2c.h2f;
         
         strob_timeout = config.strob_timeout_e2c;
+    elseif traj.freq > 1090
+        thres1 = config.thres_fighter.h1;
+        thres2 = config.thres_fighter.h2;
+        
+        thres1f = config.thres_fighter.h1f;
+        thres2f = config.thres_fighter.h2f;
+        
+        strob_timeout = config.strob_timeout_fighter;
+    else
+        thres1 = config.thres1090.h1;
+        thres2 = config.thres1090.h2;
+        
+        thres1f = config.thres1090.h1f;
+        thres2f = config.thres1090.h2f;
+        
+        strob_timeout = config.strob_timeout_1090;
     end
     
     if poit.Frame - traj.t_current > strob_timeout

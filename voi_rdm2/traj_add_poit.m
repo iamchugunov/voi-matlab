@@ -61,6 +61,8 @@ function [traj, config] = traj_add_poit(traj, poit, config)
                         sko_thres = config.sko_thres_1090;
                     elseif traj.freq < 1090
                         sko_thres = config.sko_thres_e2c;
+                    elseif traj.freq > 1090
+                        sko_thres = config.sko_thres_fighter;
                     end
                     [flag, t_rd, rd, koef, sko] = traj_approx_one_rd(poits, i, sko_thres);
                     if flag

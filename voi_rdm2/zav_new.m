@@ -12,7 +12,7 @@ function [zav, config] = zav_new(poit, config)
     
     zav.T_nak_default = config.T_nak; % время накопления по умолчанию
     zav.T_nak = config.T_nak; % время накопления конкретной траектории
-    zav.zav_T_kill = config.zav_T_kill;
+    zav.zav_T_kill = config.zav_T_kill_1090;
     zav.traj_T_kill = config.traj_T_kill;
     zav.strob_timeout = config.strob_timeout_1090;
     zav.freqs = 0; % массив частот
@@ -38,6 +38,12 @@ function [zav, config] = zav_new(poit, config)
         zav.zav_T_kill = config.zav_T_kill_e2c;
         zav.T_nak = config.T_nak_e2c;
         zav.strob_timeout = config.strob_timeout_e2c;
+    end
+    
+    if zav.freq > 1090
+        zav.zav_T_kill = config.zav_T_kill_fighter;
+        zav.T_nak = config.T_nak_fighter;
+        zav.strob_timeout = config.strob_timeout_fighter;
     end
     
     

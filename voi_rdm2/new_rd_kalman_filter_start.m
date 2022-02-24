@@ -9,6 +9,10 @@ function [filter] = new_rd_kalman_filter_start(poits, num, rd0, rdv0, config, tr
         filter.D_n = config.sigma_n_1090^2;
     elseif traj.freq < 1090
         filter.D_n = config.sigma_n_e2c^2;
+    elseif traj.freq > 1090
+        filter.D_n = config.sigma_n_fighter^2;
+    else
+        filter.D_n = config.sigma_n_1090^2;
     end
     
     filter.D_ksi = config.sigma_ksi^2;

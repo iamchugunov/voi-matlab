@@ -1,7 +1,7 @@
-function [Xf, t] = make_raschet(traj, config)
+function [X, t] = make_raschet(traj, config)
     poits = traj.poits;
     Tnak = 30;
-    T = 10;
+    T = 5;
     k = 0;
     n1 = 1;
     n2 = 2;
