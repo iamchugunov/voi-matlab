@@ -5,12 +5,14 @@ function [filter] = new_rd_kalman_filter_start(poits, num, rd0, rdv0, config, tr
     filter.D_x = [5.129861367044355,1.549330643827032,0.225332035873160;1.549330643827032,0.723918633160889,0.144465161849528;0.225332035873160,0.144465161849528,0.043840185895378];
     filter.t_last = poits(1).Frame;
     
-    if traj.freq == 1090
+    if traj.TYPE == 1
         filter.D_n = config.sigma_n_1090^2;
-    elseif traj.freq < 1090
+    elseif traj.TYPE == 2
         filter.D_n = config.sigma_n_e2c^2;
-    elseif traj.freq > 1090
+    elseif traj.TYPE == 3
         filter.D_n = config.sigma_n_fighter^2;
+    elseif traj.TYPE == 4
+        filter.D_n = config.sigma_n_mig^2;
     else
         filter.D_n = config.sigma_n_1090^2;
     end

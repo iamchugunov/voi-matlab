@@ -56,7 +56,8 @@ function [X, t] = make_raschet(traj, config)
     
     geoplot(config.PostsBLH(1,:),config.PostsBLH(2,:),'vk','linewidth',2)
     hold on
-    geoplot(x(1,:),x(2,:),'-','linewidth',2)
+%     geoplot(x(1,:),x(2,:),'-','linewidth',2)
+    geoplot(x(1,:),x(2,:),'kx-','linewidth',2)
     geobasemap streets
 end
 

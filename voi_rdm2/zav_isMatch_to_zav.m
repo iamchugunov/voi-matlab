@@ -2,6 +2,10 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
     
 %     flag = 1;
 %     return;
+    if zav.TYPE ~= poit.TYPE
+        flag = 0;
+        return
+    end
     
     if zav.Smode ~= -1 && poit.Smode ~=-1
         if zav.Smode == poit.Smode
@@ -25,18 +29,22 @@ function [flag] = zav_isMatch_to_zav(zav, poit, config)
 %         return;
 %     end
     
-    if zav.freq == 1090
+    if zav.TYPE == 1
         thres1 = config.thres1090.h1;
         thres2 = config.thres1090.h2;
         strob_timeout = config.strob_timeout_1090;
-    elseif zav.freq < 1090
+    elseif zav.TYPE == 2
         thres1 = config.thres_e2c.h1;
         thres2 = config.thres_e2c.h2;
         strob_timeout = config.strob_timeout_e2c;
-    elseif zav.freq > 1090
+    elseif zav.TYPE == 3
         thres1 = config.thres_fighter.h1;
         thres2 = config.thres_fighter.h2;
         strob_timeout = config.strob_timeout_fighter;
+    elseif zav.TYPE == 4
+        thres1 = config.thres_mig.h1;
+        thres2 = config.thres_mig.h2;
+        strob_timeout = config.strob_timeout_mig;
     end
     
     if poit.Frame - zav.t_current > strob_timeout

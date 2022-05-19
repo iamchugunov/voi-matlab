@@ -84,10 +84,12 @@ function [poits] = readprimaryfolder()
 %             poit.kursk = str2num(S{19,1});
 %             poits(k) = poit;
 
-%             if str2num(S{8,1}) <= 1090
-%                 k = k - 1;
-%                 continue;
-%             end
+            if str2num(S{8,1}) ~= 1090
+                k = k - 1;
+                continue;
+            end
+            
+            
 
                     
             poits(k).Frame = str2num(S{1,1});
@@ -120,11 +122,19 @@ function [poits] = readprimaryfolder()
                 poits(k).rd(6) = (toa(2) - toa(1))*c_ns;
                 poits(k).rd_flag(6) = 1;
             end
+            
+            
             poits(k).Smode = str2num(S{7,1});
             poits(k).freq = str2num(S{8,1});
             poits(k).dur = str2num(S{9,1});
             poits(k).amp = str2num(S{10,1});
             poits(k).count = length(find(toa > 0));
+            
+%             if ~vertoletttttt(poits(k))
+%                 k = k - 1;
+%                 continue;
+%             end
+            
             poits(k).coords = [str2num(S{11,1});str2num(S{12,1});str2num(S{13,1})];
             poits(k).velo = str2num(S{14,1});
             poits(k).flags = str2num(S{15,1});

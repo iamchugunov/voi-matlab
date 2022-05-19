@@ -20,7 +20,12 @@ function [zav, config] = zav_add_poit(zav, poit, config)
     zav.poits(zav.p_count) = poit;
     zav.freqs(zav.p_count) = poit.freq;
     
-    zav.freq = (zav.freq * (zav.p_count - 1) + poit.freq)/zav.p_count;
+    rl_count = length(find(zav.freqs ~= 1090));
+    if poit.freq ~= 1090
+        zav.freq = (zav.freq * (rl_count - 1) + poit.freq)/rl_count;
+    end
+    
+    zav.rl_percent = round(rl_count*100/length(zav.freqs),2);
     
     if (zav.Smode == -1) && (poit.Smode ~= -1)
         IDS = find([zav.poits.Smode] == poit.Smode);

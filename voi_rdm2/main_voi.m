@@ -1,10 +1,16 @@
 function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
      
-    zav = struct([]);
-    trash_zav = struct([]);
+%     zav = struct([]);
+%     trash_zav = struct([]);
+%     
+%     traj = struct([]);
+%     trash_traj = struct([]);
+
+    zav = [];
+    trash_zav = [];
     
-    traj = struct([]);
-    trash_traj = struct([]);
+    traj = [];
+    trash_traj = [];
     
     config.IDlist = [];
     
@@ -13,12 +19,25 @@ function [traj, zav, trash_traj, trash_zav] = main_voi(poits, config)
              
         poit = poits(i);
         poit.id_only = 0;
-        poit.rd_f = zeros(6,3);        
+        poit.rd_f = zeros(6,3);
+        
+        poit.TYPE = 0;
+        if poit.freq == 1090
+            poit.TYPE = 1;
+        elseif poit.freq < 1090
+            poit.TYPE = 2;
+        elseif poit.freq > 1090
+            if poit.freq > 9308 && poit.freq < 9312
+                poit.TYPE = 4; % mig
+            else
+                poit.TYPE = 3;
+            end
+        end
         
         
         [zav, trash_zav, config] = voi_deleting_old_zavs(poit, zav, trash_zav, config);
         
-        if filter_poit(poit)
+        if filter_poit(poit, config)
              continue
         end
         

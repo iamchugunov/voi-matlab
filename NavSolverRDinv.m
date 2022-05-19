@@ -1,7 +1,7 @@
 function [X, dop, nev, flag] = NavSolverRDinv(y, posts, X0, h)
 
     epsilon = 0.001;
-    max_iter = 10;
+    max_iter = 7;
     
     nums = find(y ~= 0);
     N = length(nums);
@@ -62,7 +62,7 @@ while 1
     
     if (nev < epsilon) || (iter > max_iter) 
         
-        if nev > 1e8 || norm(X(1:2)) > 5.e5
+        if nev > 1e8 || norm(X(1:2)) > 6.e5 || isnan(X(1))
             flag = 0;
             dop = 0;
         else
@@ -72,7 +72,7 @@ while 1
             DOPy = sqrt(abs(invHH(2,2)));
             dop = norm([DOPx DOPy]);
             nev = norm(y(nums) - Y);
-            if nev > 100
+            if nev > 200
                 flag = 0;
             end
         end

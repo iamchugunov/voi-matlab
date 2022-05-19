@@ -32,7 +32,8 @@ function [] = AC_analysys(traj)
             for i = 1:length(cur_poits)
                 match_flag = 0;
                 for j = 1:length(codes)    
-                    if strcmp(cur_poits(i).ACdata,codes(j).code)
+%                     if strcmp(cur_poits(i).ACdata,codes(j).code)
+                    if cur_poits(i).ACdata == codes(j).code
                         match_flag = 1;
                         break
                     end
@@ -55,14 +56,14 @@ function [] = AC_analysys(traj)
             codes(nms) = [];
             
             for i = 1:length(codes)
-                codes(i).hei = decodeACcode(codes(i).code);
+                codes(i).hei = decodeACcode(dec2hex(codes(i).code,4));
             end
             
             
             
             fprintf(['\n' num2str(poits(n1).Frame - t0) '-' num2str(poits(n2).Frame - t0) ' сек\n'] );
             for i = 1:length(codes)
-                fprintf([codes(i).code ' ' num2str(codes(i).hei) ' ' num2str(codes(i).count) '\n']);
+                fprintf([num2str(codes(i).code) '\t' dec2hex(codes(i).code,4) '\t' dec2bin(codes(i).code,16) '\t' num2str(codes(i).hei) '\t' num2str(codes(i).count) '\n']);
             end
             
             n2_last = n2;

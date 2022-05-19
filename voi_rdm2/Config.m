@@ -25,6 +25,12 @@ function [ config ] = Config( )
     PostsBLH(:,2) = [30.032239; 30.852883; 161.8];
     PostsBLH(:,3) = [30.192029; 30.857960; 108.8];
     PostsBLH(:,4) = [30.095264; 30.888045; 183.3];
+    
+%     %     %arm march
+%     PostsBLH(:,1) = [40.106768; 44.325031; 852.8];
+%     PostsBLH(:,2) = [40.221664; 44.518638; 1251.5];
+%     PostsBLH(:,3) = [40.356445; 44.270861; 1680.5];
+%     PostsBLH(:,4) = [40.204057; 44.378471; 1007.7];
 
     BLHref = mean(PostsBLH');
     BLHref = PostsBLH(:,4);
@@ -63,21 +69,25 @@ function [ config ] = Config( )
     config.zav_T_kill_1090 = 1;
     config.zav_T_kill_e2c = 25;
     config.zav_T_kill_fighter = 5;
+    config.zav_T_kill_mig = 25;
     
     config.traj_T_kill = 30; 
     config.strob_timeout_1090 = 30; 
     config.strob_timeout_e2c = 60;
     config.strob_timeout_fighter = 45; 
+    config.strob_timeout_mig = 45; 
     
-    config.T_nak = 10;
+    config.T_nak_1090 = 10;
     config.T_nak_e2c = 15;
     config.T_nak_fighter = 10;
+    config.T_nak_mig = 10;
     
     config.T_est = 5;
     
     config.sko_thres_1090 = 20;
     config.sko_thres_e2c = 500;
     config.sko_thres_fighter = 20;
+    config.sko_thres_mig = 20;
         
     config.thres1090.h1 = 60;
     config.thres1090.h2 = (300 - config.thres1090.h1)/10;
@@ -98,9 +108,16 @@ function [ config ] = Config( )
     config.thres_fighter.h1f = 200;
     config.thres_fighter.h2f = (600 - config.thres1090.h1f)/10;
     
+    config.thres_mig.h1 = 2500;
+    config.thres_mig.h2 = 30;
+    
+    config.thres_mig.h1f = 2500;
+    config.thres_mig.h2f = 30;
+    
     config.sigma_n_1090 = 10;
     config.sigma_n_e2c = 300;
     config.sigma_n_fighter = 100;
+    config.sigma_n_mig = 100;
     config.sigma_ksi = 0.1; % для 1090 можно 0.01
 
 

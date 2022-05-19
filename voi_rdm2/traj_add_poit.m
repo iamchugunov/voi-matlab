@@ -20,7 +20,12 @@ function [traj, config] = traj_add_poit(traj, poit, config)
     traj.poits(traj.p_count) = poit;
     traj.freqs(traj.p_count) = poit.freq;
     
-    traj.freq = (traj.freq * (traj.p_count - 1) + poit.freq)/traj.p_count;
+    rl_count = length(find(traj.freqs ~= 1090));
+    if poit.freq ~= 1090
+        traj.freq = (traj.freq * (rl_count - 1) + poit.freq)/rl_count;
+    end
+    
+    traj.rl_percent = round(rl_count*100/length(traj.freqs),2);
     
     if (traj.Smode == -1) && (poit.Smode ~= -1)
         IDS = find([traj.poits.Smode] == poit.Smode);

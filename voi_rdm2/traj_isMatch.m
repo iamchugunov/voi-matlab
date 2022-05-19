@@ -1,6 +1,11 @@
 function [flag, d] = traj_isMatch(traj, poit, config)
 
     d = 0;
+    
+    if traj.TYPE ~= poit.TYPE
+        flag = 0;
+        return
+    end
 %     flag = 1;
 %     return;
     
@@ -20,7 +25,7 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         return
     end
     
-    if traj.freq == 1090
+    if traj.TYPE == 1
         thres1 = config.thres1090.h1;
         thres2 = config.thres1090.h2;
         
@@ -28,7 +33,7 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         thres2f = config.thres1090.h2f;
         
         strob_timeout = config.strob_timeout_1090;
-    elseif traj.freq < 1090
+    elseif traj.TYPE == 2
         thres1 = config.thres_e2c.h1;
         thres2 = config.thres_e2c.h2;
         
@@ -36,7 +41,7 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         thres2f = config.thres_e2c.h2f;
         
         strob_timeout = config.strob_timeout_e2c;
-    elseif traj.freq > 1090
+    elseif traj.TYPE == 3
         thres1 = config.thres_fighter.h1;
         thres2 = config.thres_fighter.h2;
         
@@ -44,6 +49,14 @@ function [flag, d] = traj_isMatch(traj, poit, config)
         thres2f = config.thres_fighter.h2f;
         
         strob_timeout = config.strob_timeout_fighter;
+    elseif traj.TYPE == 4
+        thres1 = config.thres_mig.h1;
+        thres2 = config.thres_mig.h2;
+        
+        thres1f = config.thres_mig.h1f;
+        thres2f = config.thres_mig.h2f;
+        
+        strob_timeout = config.strob_timeout_mig;
     else
         thres1 = config.thres1090.h1;
         thres2 = config.thres1090.h2;
