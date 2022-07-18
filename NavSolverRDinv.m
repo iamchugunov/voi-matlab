@@ -1,4 +1,4 @@
-function [X, dop, nev, flag] = NavSolverRDinv(y, posts, X0, h)
+function [X, flag, dop, nev] = NavSolverRDinv(y, posts, X0, h)
 
     epsilon = 0.001;
     max_iter = 7;

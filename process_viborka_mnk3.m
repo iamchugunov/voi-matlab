@@ -18,9 +18,24 @@ function [x1, t1, x2, t2] = process_viborka_mnk3(poits, config)
             [X1, flag1, dop1, nev1] = NavSolverRDinvh(poits(i).rd, config.posts, [1000;0;0], 0);
             if flag1
                 [b1, l1, h1] = enu2geodetic(X1(1,end), X1(2,end), X1(3,end), config.BLHref(1), config.BLHref(2), config.BLHref(3), wgs84Ellipsoid);
-                [x0, y0, z0] = geodetic2enu(b1, l1, 7000, config.BLHref(1), config.BLHref(2), config.BLHref(3), wgs84Ellipsoid);
-                [X2, flag2, dop1, nev1] = NavSolverRDinv(poits(i).rd, config.posts, [x0;y0], z0);
+                h = 3000:1000:13000;
+                X3 = [];
+                nev = [];
+                for j = 1:length(h)
+                    [x0, y0, z0] = geodetic2enu(b1, l1, h(j), config.BLHref(1), config.BLHref(2), config.BLHref(3), wgs84Ellipsoid);
+                    [X2, dop2, nev1, flag2] = NavSolverRDinv(poits(i).rd, config.posts, [1000;0], z0);
+                    if flag2
+                       X3(:,j) = X2;
+                       nev(j) = nev1;
+                    else
+                        nev(j) = 100000000;
+                    end
+                end
+                if flag2
+                [m, n] = min(nev);
+                X2 = X3(:,n);
                 X2(3) = z0;
+                end
             else
                 continue
             end
@@ -39,7 +54,7 @@ function [x1, t1, x2, t2] = process_viborka_mnk3(poits, config)
             if flag2
                 
                 k2 = k2 + 1;
-                x2(:,k2) = [X2];
+                x2(:,k2) = [X2;b1;l1;h(n)];
                 t2(k2) = poits(i).Frame;
             end
         end

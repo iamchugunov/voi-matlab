@@ -6,6 +6,20 @@ function [] = get_rd_from_poits(poits)
     k5 = 0;
     k6 = 0;
     
+    t1 = [];
+    t2 = [];
+    t3 = [];
+    t4 = [];
+    t5 = [];
+    t6 = [];
+    
+    rd1 = [];
+    rd2 = [];
+    rd3 = [];
+    rd4 = [];
+    rd5 = [];
+    rd6 = [];
+    
     t0 = poits(1).Frame;
     t0 = 0;
     for i = 1:length(poits)
