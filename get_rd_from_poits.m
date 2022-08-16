@@ -6,22 +6,32 @@ function [] = get_rd_from_poits(poits)
     k5 = 0;
     k6 = 0;
     
-    t1 = [];
-    t2 = [];
-    t3 = [];
-    t4 = [];
-    t5 = [];
-    t6 = [];
     
-    rd1 = [];
-    rd2 = [];
-    rd3 = [];
-    rd4 = [];
-    rd5 = [];
-    rd6 = [];
     
-    t0 = poits(1).Frame;
+    
     t0 = 0;
+    t1 = poits(1).Frame-t0;
+    t2 = poits(1).Frame-t0;
+    t3 = poits(1).Frame-t0;
+    t4 = poits(1).Frame-t0;
+    t5 = poits(1).Frame-t0;
+    t6 = poits(1).Frame-t0;
+    
+%     t0 = poits(1).Frame;
+%     t1 = t0;
+%     t2 = t0;
+%     t3 = t0;
+%     t4 = t0;
+%     t5 = t0;
+%     t6 = t0;
+    
+    rd1 = 0;
+    rd2 = 0;
+    rd3 = 0;
+    rd4 = 0;
+    rd5 = 0;
+    rd6 = 0;
+    
     for i = 1:length(poits)
         if poits(i).ToA(4) > 0 && poits(i).ToA(1) > 0
             k1 = k1 + 1;
