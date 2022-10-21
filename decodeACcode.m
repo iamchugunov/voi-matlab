@@ -5,7 +5,7 @@ function [out] = decodeACcode(code)
     part1 = bitand(code, 0x0007);
     part2 = bitshift(bitand(code, 0x0070),-1);
     part3 = bitshift(bitand(code, 0x0700),-2);
-    part4 = bitshift(bitand(code, 0x7070),-3);
+    part4 = bitshift(bitand(code, 0x7000),-3);
     
     out = bitor(part1, part2);
     out = bitor(part3, out);

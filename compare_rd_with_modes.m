@@ -2,8 +2,8 @@ function [t, err, R, X_modes_interp] = compare_rd_with_modes(traj, config)
 modes = traj.modes;
 poits = traj.poits;
 
-nums = find([poits.Smode] ~= -1);
-poits = poits(nums);
+% nums = find([poits.Smode] ~= -1);
+% poits = poits(nums);
 
 rd_modes = [];
 t_modes = [];
@@ -50,6 +50,8 @@ for i = 1:3
     or;
 end
 
+RD = rd;
+
 % a = 0.99;
 % RD1(:,1) = rd(:,1);
 % for i = 2:length(rd)
@@ -61,6 +63,9 @@ end
 % end
 % RD = RD1/2 + RD2/2;
 
+[t_modes, nums] = unique(t_modes); 
+rd_modes = rd_modes(:,nums);
+modes = modes(:,nums);
 RD_modes = [];
 for i = 1:3
     RD_modes(i,:) = interp1(t_modes, rd_modes(i,:), t);
@@ -81,25 +86,26 @@ end
 
 figure
 subplot(221)
-plot(t,rd','x')
+plot(t-t(1),rd','x')
 hold on
-plot(t,RD','.-','linewidth',2)
+plot(t-t(1),RD','.-','linewidth',2)
 % plot(t,RD')
-plot(t, RD_modes','.-','linewidth',2)
+plot(t-t(1), RD_modes','.-','linewidth',2)
 
-err = RD - RD_modes;
+err = RD_modes - RD;
 nums = find(~isnan(err(1,:)));
 err = err(:,nums);
 t = t(nums);
 R = R(:,nums);
 X_modes_interp = X_modes_interp(:,nums);
 % figure
-subplot(223)
-plot(t,err','.-','linewidth',2)
-grid on
-ylim([-50 50])
 
-subplot(122)
+subplot(223)
+plot(t-t(1),err','.-','linewidth',2)
+grid on
+% ylim([-50 50])
+
+subplot(222)
 plot3(config.posts(1,:),config.posts(2,:),config.posts(3,:),'v')
 hold on
 grid on
@@ -108,5 +114,17 @@ plot3(modes(8,:),modes(9,:),modes(10,:),'.-','linewidth',2)
 daspect([1 1 1])
 view(2)
 
+me = mean(err');
+se = std(err');
+subplot(224)
+hold on
+grid on
+for i = 1:3
+    histogram(err(i,:),20)
 end
-
+leg = {};
+for i = 1:3
+    leg{i} = ['Mx: ' num2str(round(me(i),1)) ' STD:' num2str(round(se(i),1))];
+end
+legend(leg{1,1}, leg{1,2}, leg{1,3})
+end
